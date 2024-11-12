@@ -1,0 +1,233 @@
+﻿<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">{{'Blog Detayı Liste'| translate}}</h4>
+            <a *ngIf="checkClaim('CreateBlogDetailCommand')" class="pull-right" data-toggle="modal" data-target="#blogdetail"> <i style="color:white"  title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              
+              <div class="col-md-4 pull-right">
+                <mat-form-field>
+                  <mat-label>Filter</mat-label>
+                  <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                </mat-form-field>
+              </div>
+							<table mat-table [dataSource]="dataSource" matSort>
+
+
+								
+                   <ng-container matColumnDef="blogDetailId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'BlogDetailId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.blogDetailId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="blogId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'BlogId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.blogId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="tarih">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Tarih'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.tarih}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="aciklayan">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Aciklayan'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.aciklayan | slice:0:100}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="editor">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Editor'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.editor | slice:0:100}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="photo">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Photo'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.photo}}</td>
+				   </ng-container>
+
+           <ng-container matColumnDef="dil">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Dil'|translate}}</th>
+            <td mat-cell *matCellDef="let element">{{element.dil}}</td>
+          </ng-container>
+
+
+           <ng-container matColumnDef="file" >
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td style="width: 25px;" mat-cell
+              *matCellDef="let element">
+              <a *ngIf="checkClaim('UpdateBlogDetailCommand')" data-toggle="modal" data-target="#photoModal"  (click)="upFile(element.blogDetailId)">
+                <i title="{{'Image'| translate}}" style="color:#ff5722;" class="far fa-images"></i>
+              </a>
+            </td>
+          </ng-container>
+
+								<ng-container matColumnDef="update" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('UpdateBlogDetailCommand')" data-toggle="modal" data-target="#blogdetail"  (click)="getBlogDetailById(element.blogDetailId)">
+                      <i title="{{'Update'| translate}}" style="color:#ff5722;" class="far fa-edit"></i>
+                    </a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td  style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('DeleteBlogDetailCommand')" (confirm)="deleteBlogDetail(element.blogDetailId)" [swal]="deleteSwal"><i title="{{'Delete'| translate}}" style="color: #D9534E;"class="fas fa-trash-alt"></i></a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow style="text-align: center;">
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
+                </tr>
+							</table>
+							<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+							</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal modal-angular fade" id="blogdetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(blogDetailAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'Blog Detayi Form'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="blogDetailAddForm" [formGroup]="blogDetailAddForm" (ngSubmit)="save()">
+          
+					<div class="row">
+						<div class="col-md-12">
+              <select class="browser-default custom-select" formControlName="blogId">
+                <option value="">Seçiniz</option>
+                <option *ngFor="let item of blogList" [value]="item.blogId"> {{item.baslik}}</option>
+              </select>
+						</div>
+					</div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="tarih" type="text" id="tarih" name="tarih"
+                       formControlName="tarih" />
+                <div class="alert alert-danger"
+                     *ngIf="blogDetailAddForm.get('tarih')!.hasError('tarih') && blogDetailAddForm.get('tarih')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="aciklayan" type="text" id="aciklayan" name="aciklayan"
+                       formControlName="aciklayan" />
+                <div class="alert alert-danger"
+                     *ngIf="blogDetailAddForm.get('aciklayan')!.hasError('aciklayan') && blogDetailAddForm.get('aciklayan')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="editor" type="text" id="editor" name="editor"
+                       formControlName="editor" />
+                <div class="alert alert-danger"
+                     *ngIf="blogDetailAddForm.get('editor')!.hasError('editor') && blogDetailAddForm.get('editor')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="photo" type="text" id="photo" name="photo"
+                       formControlName="photo" />
+                <div class="alert alert-danger"
+                     *ngIf="blogDetailAddForm.get('photo')!.hasError('photo') && blogDetailAddForm.get('photo')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          
+          <select class="browser-default custom-select" formControlName="dil">
+            <label for="">Dil</label>
+            <option value="1">Türkçe</option>
+            <option value="2">İngilizce</option>
+          </select>
+                   
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-angular fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(photoForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'Blog Detayı Fotoğraf Form'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="photoForm" [formGroup]="photoForm" (ngSubmit)="addPhotoSave()">
+          
+				
+					<div class="row">
+            <div class="col col-md-12">
+             
+                <input  placeholder="id" type="hidden" id="id" name="id"
+                       formControlName="id" />
+                <div class="alert alert-danger"
+                     *ngIf="photoForm.get('id')!.hasError('id') && photoForm.get('id')!.dirty">
+                </div>
+             
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              
+                <input style="float: left;" placeholder="file" type="file" id="file" name="file"  (change)="uploadFile($event)"
+                       formControlName="file" />
+
+                  
+                <div class="alert alert-danger"
+                     *ngIf="photoForm.get('file')!.hasError('file') && photoForm.get('file')!.dirty">
+                </div>
+              
+            </div>
+          </div>
+                   
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal #deleteSwal title="{{'DeleteConfirm' | translate}}" icon = "error" [showCancelButton]="true"
+	[confirmButtonText] = "'OK'"[cancelButtonText] = "'Cancel'" >
+</swal>
+

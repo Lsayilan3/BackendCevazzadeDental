@@ -1,0 +1,231 @@
+<div class="logo" style="padding: 5px">
+  <a class="simple-text" href="#">
+    <!-- <div class="logo-img">
+				 <img src="/assets/img/angular2-logo-red.png">
+		 </div>  -->
+    <!-- Dev Architecture -->
+
+   <div class="site-logo-text">
+     <img
+      src="/assets/img/logo/file.jpg"
+      style="
+        width: 248px;
+        margin-top: -80px;
+        margin-bottom: -85px;
+        margin-left: 0px;
+        margin-right: 0px;
+      "
+    />
+  </div> 
+  </a>
+</div>
+<div class="sidebar-wrapper">
+  <div class="nav-container">
+    <ul class="nav">
+      <li routerLinkActive="active">
+        <a data-toggle="collapse" class="nav-link" href="#Management">
+          <i class="material-icons">widgets</i>
+          <p>
+            {{ "Management" | translate }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse" id="Management">
+          <ul class="nav">
+            <li
+              *ngFor="let menuItem of adminMenuItems"
+              class="{{ menuItem.class }} nav-item"
+            >
+              <a
+                *ngIf="checkClaim(menuItem.claim)"
+                class="nav-link"
+                [routerLink]="[menuItem.path]"
+              >
+                <i class="material-icons">{{ menuItem.icon }}</i>
+                <p>{{ menuItem.title | translate }}</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+	</ul>
+	
+	<ul class="nav">
+		<li routerLinkActive="active">
+		  <a data-toggle="collapse" class="nav-link" href="#AppMenu">
+			<i class="material-icons">extension</i>
+			<p>
+			  {{ "AppMenu" | translate }}
+			  <b class="caret"></b>
+			</p>
+		  </a>
+		  <div class="collapse" id="AppMenu">
+			<ul class="nav">
+			  <li
+				*ngFor="let menuItem of userMenuItems"
+				class="{{ menuItem.class }} nav-item"
+			  >
+				<a
+				  *ngIf="checkClaim(menuItem.claim)"
+				  class="nav-link"
+				  [routerLink]="[menuItem.path]"
+				>
+				  <i class="material-icons">{{ menuItem.icon }}</i>
+				  <p>{{ menuItem.title | translate }}</p>
+				</a>
+			  </li>
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="anasayfa-photo-url" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Anasayfa Fotoğraf</p>
+          </a>
+        </li> 
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="anasayfa" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Anasayfa</p>
+          </a>
+        </li> 
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="hakkimizda" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Hakkımızda</p>
+          </a>
+
+        </li>
+        <!-- <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="blogdetay" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Blog Detayı</p>
+          </a>
+
+        </li>  -->
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="hizmetlerimiz" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Hizmetlerimiz</p>
+          </a>   
+        </li> 
+       
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="hekimlerimiz" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Hekimlerimiz</p>
+          </a>   
+        </li> 
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="blog" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Blog</p>
+          </a>
+
+        </li> 
+        <!-- <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="hekimlerimizdetay" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Hekimlerimiz Detay</p>
+          </a>   
+        </li>  -->
+       
+        <!-- <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="hizmetlerimizdetay" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Hizmetlerimiz Detay</p>
+          </a>   
+        </li>  -->
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="randevu" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Randevu</p>
+          </a>   
+        </li> 
+        <li class=" nav-item">
+          <a    
+            class="nav-link" routerLink="durum" 
+          >
+            <p style="font-size: 15px; margin: 0;;
+            line-height: 30px;
+            font-size: 15px;
+            position: relative;
+            display: block;
+            height: auto;
+            white-space: nowrap;" ><i style="margin-right: 10px; font-size: 17px;"  class="fa-brands fa-audible"></i>Durum</p>
+          </a>
+
+        </li> 
+			</ul>
+		  </div>
+		</li>
+	  </ul>
+  </div>
+</div>

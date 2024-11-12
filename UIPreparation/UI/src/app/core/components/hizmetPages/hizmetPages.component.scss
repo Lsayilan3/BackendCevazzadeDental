@@ -1,0 +1,59 @@
+.scrollable {
+    max-height: 100px; /* Scroll alanının maksimum yüksekliği */
+    overflow-y: auto; /* Yalnızca dikey yönde scroll özelliği (gerekirse) */
+  }
+  .button-group {
+  display: flex;
+  justify-content: space-evenly;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-body {
+    flex: 1 0 auto;
+  }
+  
+  
+  @media (min-width: 1200px) and (max-width: 1667px) {
+    .button-group .btn {
+      font-size: 12px;
+    }
+  }
+  
+  @media (min-width: 1200px) and (max-width: 1300px) {
+    .button-group .btn {
+      font-size: 10px;
+    }
+  }
+  
+  .card-title {
+    white-space: nowrap; /* Başlığı tek satırda tutar */
+    overflow: hidden;    /* Taşan metni gizler */
+    text-overflow: ellipsis; /* Taşan metni '...' ile kısaltır */
+  }
+  
+  #iconbir{
+    display: none;
+  }
+  
+  @media (min-width: 1200px) and (max-width: 1667px) {
+    .button-text {
+      display: none;
+    }
+    #iconbir{
+      display: block;
+    }
+  }
+  
+  
+  @media(max-width: 1080px) {
+    .button-text {
+      font-size: 10px;
+      margin: 0px;
+      padding: 0px;
+    }
+   
+  }
